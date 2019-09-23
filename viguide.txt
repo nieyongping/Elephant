@@ -1,2 +1,6 @@
-this is the best guide of vi
-i have to process the second change
+dG: 删除当前行到尾行
+d1G: 删除行首到当前行
+0: 回到当前行首
+$: 定位到当行行尾
+d0: 删除当前光标到行首
+d$: 删除当前光标到行尾
