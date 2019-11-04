@@ -1,0 +1,5 @@
+kafka 查看消费了多少数据
+
+kafka-run-class.sh kafka.tools.ConsumerOffsetChecker --group ** --topic ** --zookeeper **
+
+
