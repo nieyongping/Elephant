@@ -1,0 +1,29 @@
+set hive.enforce.sorting=false;
+set hive.enforce.bucketing=false;
+set hive.exec.dynamic.partition=true;
+set hive.exec.dynamic.partition.mode=nonstrict;
+
+sort by 单个reducer中排序
+order by 全局排序
+distribute by 控制map的输出在reduce中是如何划分的。
+cluster by 相当于 distribute by 和 sort by 结合体，只支持升序。
+
+set hive.exec.reducers.bytes.per.reducer=<number> 设置每个reducer处理的最大字节数量。
+
+set hive.exec.reducers.max=<number> 设置hive的最大reducer数量。
+
+set hive.mapreduce.job.reduces=<number>
+
+reducers的数量并不是越多越好，我们只到有多少个reducer就会有多少个文件，小文件过多在hdfs中就会占用大量的空间，造成资源的浪费。如果reducer数量过小，导致某个reducer处理大量数据，甚至会产生OOM内存溢出的错误。
+
+Map Join
+SQL中涉及到多张表的join，当有一张表的大小小于1G时，使用Map Join可以显著提高SQL的效率。
+
+select /*+MAPJOIN(table_a)*/,a.*,b.* from table_a a join table_b b on a.id=b.id
+
+解决数据倾斜的通用方法
+
+数据倾斜的现象，任务进度长期维持在99%，只有少量的reducer任务完成，未完成任务数量读写量非常大，超过10G。
+通用解决方法: set hive.groupby.skewindata=true;
+
+optimize is the most difficult thing!
